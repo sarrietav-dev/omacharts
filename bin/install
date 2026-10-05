@@ -8,13 +8,14 @@ apps="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
 icons="${XDG_DATA_HOME:-$HOME/.local/share}/icons/hicolor"
 mkdir -p "$apps"
 
+# Use the system utility: this script is also named install and may be on PATH.
 for size in 16 24 32 48 64 128 256 512; do
   dir="$icons/${size}x${size}/apps"
   mkdir -p "$dir"
-  install -m644 "$root/assets/icons/${size}x${size}/$id.png" "$dir/$id.png"
+  /usr/bin/install -m644 "$root/assets/icons/${size}x${size}/$id.png" "$dir/$id.png"
 done
 mkdir -p "$icons/scalable/apps"
-install -m644 "$root/assets/icons/$id.svg" "$icons/scalable/apps/$id.svg"
+/usr/bin/install -m644 "$root/assets/icons/$id.svg" "$icons/scalable/apps/$id.svg"
 
 # The bar widget shells out to `omacharts`, so it has to be on PATH.
 mkdir -p "$HOME/.local/bin"
