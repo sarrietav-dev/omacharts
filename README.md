@@ -2,6 +2,11 @@
 
 Fast, beautiful charting software for [Omarchy](https://omarchy.org).
 
+This is the [sarrietav-dev fork](https://github.com/sarrietav-dev/omacharts) of
+[Jorge Manrubia's Omacharts](https://github.com/jorgemanrubia/omacharts).
+It includes a **1-minute (`1m`) timeframe** in the default resolution strip,
+alongside `5m`, `15m`, `1h`, `4h`, `1D` and `1W`.
+
 <p align="center">
   <a href="https://www.youtube.com/watch?v=uetKLwfoUrM">
     <img src="assets/examples/video-poster.jpg" width="100%" alt="Watch Omacharts on YouTube">
@@ -41,7 +46,25 @@ Fast, beautiful charting software for [Omarchy](https://omarchy.org).
 
 ## Installing
 
-On Arch, install the package attached to the latest
+### This fork
+
+Build and run this fork from its working tree. On Arch/Omarchy, install the
+build dependencies first:
+
+```sh
+sudo pacman -S --needed base-devel rust gtk4 libadwaita
+git clone https://github.com/sarrietav-dev/omacharts
+cd omacharts
+./bin/install
+```
+
+The installer adds Omacharts to the application menu and links the command into
+`~/.local/bin`. Launch it from the menu or run `omacharts` with `~/.local/bin`
+on your `PATH`. It rebuilds from this checkout on every launch.
+
+### Upstream packages
+
+For the upstream version, install the Arch package attached to its latest
 [release](https://github.com/jorgemanrubia/omacharts/releases/latest):
 
 ```sh
@@ -49,7 +72,7 @@ curl -LO https://github.com/jorgemanrubia/omacharts/releases/latest/download/oma
 sudo pacman -U omacharts-0.1.4-1-x86_64.pkg.tar.zst
 ```
 
-Or build that same package yourself from a clone:
+Or build that same upstream package yourself from a clone:
 
 ```sh
 git clone https://github.com/jorgemanrubia/omacharts
@@ -58,12 +81,12 @@ makepkg -si
 ```
 
 Either one gets you the command on your path, the man page, shell
-completions and the agent skill. To run it from a working tree instead — it
-rebuilds on every launch — use `./bin/install`.
+completions and the agent skill. These packages track upstream releases; use
+the working-tree installation above for this fork's changes.
 
 ### Through Omarchy
 
-Omacharts is for Omarchy, so Omarchy's own package repository is where it
+Upstream Omacharts is for Omarchy, so Omarchy's own package repository is where it
 belongs, and it is
 [waiting to be merged there](https://github.com/omacom/omarchy-pkgs/pull/802).
 Once it lands, this is the whole of it:
@@ -80,6 +103,17 @@ system.
 
 Omacharts is prepared to work with multiple data providers, but at launch only
 Yahoo Finance is supported.
+
+Yahoo supports 1-minute bars, with up to 30 days of history fetched in windows
+of at most 7 days. Select `1m` in the resolution strip, type `1`, or set the
+focused chart from the terminal:
+
+```sh
+omacharts chart set --resolution 1m
+```
+
+If you have already customized the resolution strip, add `1m` through its
+editor to include it in your saved list.
 
 We are interested in adding more feeds, both free and paid. If you want to see
 yours supported, please create a Pull Request.
